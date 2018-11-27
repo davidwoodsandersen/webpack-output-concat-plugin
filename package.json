@@ -1,0 +1,11 @@
+{
+  "name": "webpack-output-concat-plugin",
+  "version": "1.0.0",
+  "description": "A plugin to concatenate to output files",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "davidwoodsandersen",
+  "license": "ISC"
+}
