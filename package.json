@@ -4,12 +4,15 @@
   "description": "A plugin to concatenate to output files",
   "main": "./dist/build.js",
   "scripts": {
-    "build": "babel ./src/index.js --out-file ./dist/build.js"
+    "build": "babel ./src/index.js --out-file ./dist/build.js",
+    "test": "jest"
   },
   "author": "davidwoodsandersen",
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0"
+    "babel-jest": "^23.6.0",
+    "babel-preset-env": "^1.7.0",
+    "jest": "^23.6.0"
   }
 }
