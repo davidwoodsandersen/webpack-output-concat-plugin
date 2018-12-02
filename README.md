@@ -1,6 +1,6 @@
 # webpack-output-transform-plugin
 
-> A plugin to transform to output files
+> A plugin to apply transformations to output files
 
 This plugin allows you to make arbitrary last-minute changes to webpack build files before they are output.
 
@@ -12,12 +12,12 @@ The plugin works by calling a user-defined function and passing it the output va
 const OutputTransformPlugin = require('webpack-output-transform-plugin');
 
 module.exports = {
-	...
-	plugins: [
-		new OutputTransformPlugin({
-			all: (code) => { return makeAnyChangeTo(code); }
-		})
-	]
+  ...
+  plugins: [
+    new OutputTransformPlugin({
+      all: (code) => { return makeAnyChangeTo(code); }
+    })
+  ]
 };
 ```
 
@@ -27,24 +27,24 @@ If your build has one entry point or you want to apply the same change to all ou
 const OutputTransformPlugin = require('webpack-output-transform-plugin');
 
 module.exports = {
-	entries: {
-		app: __dirname + '/src/app.js',
-		search: __dirname + '/src/search.js',
-	},
-	plugins: [
-		new OutputTransformPlugin({
-			rules: [
-				{
-					test: /app/,
-					transform: (code) => { return change1(code); }
-				},
-				{
-					test: /search/,
-					transform: (code) => { return change2(code); }
-				}
-			]
-		})
-	]
+  entries: {
+    app: __dirname + '/src/app.js',
+    search: __dirname + '/src/search.js',
+  },
+  plugins: [
+    new OutputTransformPlugin({
+      rules: [
+        {
+          test: /app/,
+          transform: (code) => { return change1(code); }
+        },
+        {
+          test: /search/,
+          transform: (code) => { return change2(code); }
+        }
+      ]
+    })
+  ]
 };
 ```
 
