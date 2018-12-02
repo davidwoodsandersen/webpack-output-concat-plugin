@@ -21,20 +21,28 @@ module.exports = {
 };
 ```
 
-If your build has one entry point or you want to apply the same change to all output files, use the `all` field as demonstrated above. If you want to apply different changes to different output files, use the `entries` field:
+If your build has one entry point or you want to apply the same change to all output files, use the `all` field as demonstrated above. If you want to apply different changes to different output files, use the `rules` field:
 
 ```javascript
 const OutputTransformPlugin = require('webpack-output-transform-plugin');
 
 module.exports = {
-	...
+	entries: {
+		app: __dirname + '/src/app.js',
+		search: __dirname + '/src/search.js',
+	},
 	plugins: [
 		new OutputTransformPlugin({
-			entries: {
-				'main.build.js': (code) => { return change1(code); },
-				'search.build.js': (code) => { return change2(code); },
-				...
-			}
+			rules: [
+				{
+					test: /app/,
+					transform: (code) => { return change1(code); }
+				},
+				{
+					test: /search/,
+					transform: (code) => { return change2(code); }
+				}
+			]
 		})
 	]
 };
@@ -44,5 +52,5 @@ module.exports = {
 
 |Name|Type|Description|
 |----|----|-----------|
-|`all`|`function`|Applies to all builds. If this field is set, it takes precedence over `entries`.|
-|`entries`|`object`|Key-value pairs where the key is the name of the output file, and the value is the function to use when transforming the code.|
+|`all`|`function`|Applies to all builds. If this field is set, it replaces the `rules` field.|
+|`rules`|`array`|A rule includes a `test` (RegExp) and a `transform` (function). Each rule whose test matches an output filename applies its `transform` function to that file's content.|
