@@ -4,7 +4,7 @@
   "description": "A plugin to transform output files",
   "main": "./dist/build.js",
   "scripts": {
-    "build": "babel ./src/index.js --out-file ./dist/build.js",
+    "build": "mkdir -p ./dist && touch ./dist/build.js && babel ./src/index.js --out-file ./dist/build.js",
     "test": "jest"
   },
   "author": "davidwoodsandersen",
