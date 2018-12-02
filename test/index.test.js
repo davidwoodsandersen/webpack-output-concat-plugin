@@ -1,4 +1,4 @@
-import OutputConcatPlugin from '../src/index.js';
+import OutputTransformPlugin from '../src/index.js';
 
 describe('input validation', () => {
 	it('2 > 1', () => {

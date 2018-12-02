@@ -1,7 +1,7 @@
 {
-  "name": "webpack-output-concat-plugin",
+  "name": "webpack-output-transform-plugin",
   "version": "1.0.0",
-  "description": "A plugin to concatenate to output files",
+  "description": "A plugin to transform output files",
   "main": "./dist/build.js",
   "scripts": {
     "build": "babel ./src/index.js --out-file ./dist/build.js",

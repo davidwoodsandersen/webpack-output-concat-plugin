@@ -1,5 +1,5 @@
 /**
- * @file webpack-output-concat-plugin
+ * @file webpack-output-transform-plugin
  * @author davidwoodsandersen
  */
 
@@ -7,7 +7,7 @@
  * Creates a new plugin instance.
  * @class
  */
-class OutputConcatPlugin {
+class OutputTransformPlugin {
 	/**
 	 * @constructs
 	 */
@@ -18,4 +18,4 @@ class OutputConcatPlugin {
 	apply(compiler) {}
 }
 
-export default OutputConcatPlugin;
+export default OutputTransformPlugin;

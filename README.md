@@ -1,3 +1,3 @@
-# webpack-output-concat-plugin
+# webpack-output-transform-plugin
 
-> A plugin to concatenate to output files
+> A plugin to transform to output files
