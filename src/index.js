@@ -12,7 +12,23 @@ class OutputTransformPlugin {
 	 * @constructs
 	 */
 	constructor(options) {
+		this.validate(options);
 		this.options = options;
+	}
+
+	/**
+	 * Validates input options.
+	 * @param {object} options
+	 */
+	validate(options) {
+		if (!options.all && !options.rules)
+			throw new Error('"all" or "rules" must be set');
+
+		if (options.all && typeof options.all !== 'function')
+			throw new Error('"all" must be a function');
+
+		if (options.rules && !Array.isArray(options.rules))
+			throw new Error('"rules" must be an array');
 	}
 
 	/**
@@ -50,13 +66,9 @@ class OutputTransformPlugin {
 	 */
 	apply(compiler) {
 		compiler.hooks.emit.tap('OutputTransformPlugin', params => {
-			if (typeof this.options.all === 'function') {
-				this.transformAll(params.assets, this.options.all);
-			} else if (Array.isArray(this.options.rules)) {
+			this.options.all ?
+				this.transformAll(params.assets, this.options.all) :
 				this.transformByRule(params.assets, this.options.rules);
-			} else {
-				throw new Error('Must include an "all" field or an "entries" field.');
-			}
 		});
 	}
 }
