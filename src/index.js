@@ -16,27 +16,32 @@ class OutputTransformPlugin {
 	}
 
 	/**
-	 * Returns a map of output asset
-	 * filenames to their transform action.
+	 * Apply a transformation to all output files.
 	 * @param {object} assets
-	 * @returns {object}
+	 * @param {function} transform
 	 */
-	getTargetMap(assets) {
-		var map = {};
-
-		if (typeof this.options.all === 'function') {
-			Object.keys(assets).forEach((asset) => {
-				map[asset] = this.options.all;
-			});
-		} else if (Array.isArray(this.options.entries)) {
-			this.options.entries.forEach((entry) => {
-				map[entry] = this.entries[entry];
-			});
-		} else {
-			throw new Error('Must include an "all" field or an "entries" field.');
+	transformAll(assets, transform) {
+		for (var asset in assets) {
+			if (assets.hasOwnProperty(asset)) {
+				assets[asset]._value = transform(assets[asset]._value);
+			}
 		}
+	}
 
-		return map;
+	/**
+	 * Apply a transformation to files whose names
+	 * match a RegEx rule.
+	 * @param {object} assets
+	 * @param {array} rules
+	 */
+	transformByRule(assets, rules) {
+		rules.forEach((rule) => {
+			for (var asset in assets) {
+				if (assets.hasOwnProperty(asset) && rule.test.test(asset)) {
+					assets[asset]._value = rule['transform'](assets[asset]._value);
+				}
+			}
+		});
 	}
 
 	/**
@@ -45,12 +50,12 @@ class OutputTransformPlugin {
 	 */
 	apply(compiler) {
 		compiler.hooks.emit.tap('OutputTransformPlugin', params => {
-			var map = this.getTargetMap(params.assets);
-
-			for (var entry in map) {
-				if (map.hasOwnProperty(entry)) {
-					params.assets[entry]._value = map[entry](params.assets[entry]._value);
-				}
+			if (typeof this.options.all === 'function') {
+				this.transformAll(params.assets, this.options.all);
+			} else if (Array.isArray(this.options.rules)) {
+				this.transformByRule(params.assets, this.options.rules);
+			} else {
+				throw new Error('Must include an "all" field or an "entries" field.');
 			}
 		});
 	}
