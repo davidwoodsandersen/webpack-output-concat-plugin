@@ -2,6 +2,8 @@
 
 > A plugin to apply transformations to output files
 
+Test.
+
 This plugin allows you to make arbitrary last-minute changes to webpack build files before they are output.
 
 ## Usage
