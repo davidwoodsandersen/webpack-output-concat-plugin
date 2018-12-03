@@ -1,4 +1,5 @@
 # webpack-output-transform-plugin
+[![CircleCI](https://circleci.com/gh/davidwoodsandersen/webpack-output-transform-plugin.svg?style=shield)](https://circleci.com/gh/davidwoodsandersen/webpack-output-transform-plugin)
 
 > A plugin to apply transformations to output files
 
