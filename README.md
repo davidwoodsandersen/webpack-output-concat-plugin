@@ -1,13 +1,11 @@
 # webpack-output-transform-plugin
-[![CircleCI](https://circleci.com/gh/davidwoodsandersen/webpack-output-transform-plugin.svg?style=shield)](https://circleci.com/gh/davidwoodsandersen/webpack-output-transform-plugin)
+[![CircleCI](https://circleci.com/gh/davidwoodsandersen/webpack-output-transform-plugin.svg?style=shield)](https://circleci.com/gh/davidwoodsandersen/webpack-output-transform-plugin) ![Coverage](./coverage/badge-lines.svg)
 
 > A plugin to apply transformations to output files
 
-This plugin allows you to make arbitrary last-minute changes to webpack build files before they are output.
-
 ## Usage
 
-The plugin works by calling a user-defined function and passing it the output value as a string. It then takes the return value of that function and re-assigns it as the new output value.
+The plugin works by calling a user-defined function and passing it the output value as a string. It then takes the return value of that function and re-assigns it as the new output value:
 
 ```javascript
 const OutputTransformPlugin = require('webpack-output-transform-plugin');

@@ -1,6 +1,11 @@
 node_modules/
 dist/
-coverage/
+
+coverage/*.css
+coverage/*.json
+coverage/*.html
+coverage/*.js
+coverage/*.png
 
 .DS_Store
 
