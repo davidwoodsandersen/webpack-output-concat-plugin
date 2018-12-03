@@ -1,5 +1,17 @@
 import OutputTransformPlugin from '../src/index.js';
 
+function createCompilerStub() {
+	return {
+		hooks: {
+			emit: {
+				tap: (name, callback) => {
+					callback({});
+				}
+			}
+		}
+	};
+}
+
 describe('input validation', () => {
 	it('if no "all" or "rules" field is present, an error is thrown', () => {
 		expect(() => {
@@ -23,5 +35,34 @@ describe('input validation', () => {
 		expect(() => {
 			new OutputTransformPlugin({ all: () => {} });
 		}).not.toThrow();
+	});
+});
+
+describe('transformations', () => {
+	it('transformAll() is called when the "all" flag is present', () => {
+		var compilerStub = createCompilerStub();
+		jest.spyOn(OutputTransformPlugin.prototype, 'transformAll')
+			.mockImplementation(() => {});
+
+		var plugin = new OutputTransformPlugin({
+			all: () => {}
+		});
+
+		plugin.apply(compilerStub);
+
+		expect(plugin.transformAll).toHaveBeenCalled();
+	});
+	it('transformByRule() is called when the "rules" flag is present', () => {
+		var compilerStub = createCompilerStub();
+		jest.spyOn(OutputTransformPlugin.prototype, 'transformByRule')
+			.mockImplementation(() => {});
+
+		var plugin = new OutputTransformPlugin({
+			rules: []
+		});
+
+		plugin.apply(compilerStub);
+
+		expect(plugin.transformByRule).toHaveBeenCalled();
 	});
 });
