@@ -12,6 +12,8 @@ function createCompilerStub() {
 	};
 }
 
+afterEach(() => { jest.restoreAllMocks() });
+
 describe('input validation', () => {
 	it('if no "all" or "rules" field is present, an error is thrown', () => {
 		expect(() => {
@@ -64,5 +66,38 @@ describe('transformations', () => {
 		plugin.apply(compilerStub);
 
 		expect(plugin.transformByRule).toHaveBeenCalled();
+	});
+	it('transformAll() applies transformations correctly', () => {
+		var testAssets = {
+			'one.js': { _value: 'foo' },
+			'two.js': { _value: 'foo' }
+		};
+
+		OutputTransformPlugin.prototype.transformAll(
+			testAssets,
+			(code) => { return code + 'bar' }
+		);
+
+		expect(testAssets['one.js']._value).toEqual('foobar');
+		expect(testAssets['two.js']._value).toEqual('foobar');
+	});
+	it('transformByRule() applies transformations correctly', () => {
+		var testAssets = {
+			'one.js': { _value: 'foo' },
+			'two.js': { _value: 'foo' }
+		};
+
+		OutputTransformPlugin.prototype.transformByRule(
+			testAssets,
+			[
+				{
+					test: /one/,
+					transform: (code) => { return code + 'bar' }
+				}
+			]
+		);
+
+		expect(testAssets['one.js']._value).toEqual('foobar');
+		expect(testAssets['two.js']._value).toEqual('foo');
 	});
 });
